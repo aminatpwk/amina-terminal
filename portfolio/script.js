@@ -53,7 +53,7 @@ $(document).ready(function(){
                 $output.append(`
                     <p>>> Available commands:</p>
                     <p>>> <span class="text-yellow-300">about</span> - About me</p>
-                    <p>>> <span class="text-yellow-300">resume</span> - My qualifications</p>
+                    <p>>> <span class="text-yellow-300">resume</span> - Access my Resume</p>
                     <p>>> <span class="text-yellow-300">skills</span> - My Tech stack</p>
                     <p>>> <span class="text-yellow-300">projects</span> - My work</p>
                     <p>>> <span class="text-yellow-300">contact</span> - Get in touch</p>
@@ -80,13 +80,13 @@ $(document).ready(function(){
                         <p>>> - <span class="text-yellow-300">Backend Development Intern</span> @ TiranaIT (Oct 2024 - Dec 2024)</p>
                         <p>>>   - Worked extensively with Java and mongoDB, contributed to the design and implementation of the backend architecture.</p>
                         <p>>>   - Enhanced my teamwork and problem-solving skills.</p>
-                        <p>>> - <span class="text-yellow-300">IT Specialist and Networking</span> @ Mother Theresa Hospital (OCT 2023 - JAN 2024)</p>
+                        <p>>> - <span class="text-yellow-300">IT Specialist and Networking</span> @ Mother Theresa Hospital (OCT 2023 - DEC 2023)</p>
                         <p>>>   - Maintained servers and troubleshooted network related issues</p>
                         <p>>> Skills:</p>
                         <p>>> - Java, PHP, Verilog, JIRA, JavaScript, MySQL, ORACLE</p>
                         <p>>> Education:</p>
                         <p>>> - <span class="text-yellow-300">Computer Engineering</span> - Polytechnic University of Tirana (2022-2025)</p>
-                        <p>>> Download full resume: <a href="[link-to-your-resume.pdf]" class="text-blue-300 underline" target="_blank">resume.pdf</a></p>
+                        <p>>> Download full resume: <a href="https://www.dropbox.com/scl/fi/6wioh78k8sxxyed14hirf/Amina-Sokoli-Resume.pdf?rlkey=i279qmy1sk9heo5b61si4vkcy&st=4u9qceva&dl=0" class="text-blue-300 underline" target="_blank">resume.pdf</a></p>
                     `);
                     }
                 });
