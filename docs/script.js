@@ -16,7 +16,7 @@ $(document).ready(function(){
             strings: [
                 "Initializing system...",
                 "Loading portfolio...",
-                "Welcome to Amina's portfolio. Type `help` for commands."
+                "Welcome to Amina's Portfolio. Type `help` for commands."
             ],
             typeSpeed: 50,
             backSpeed: 20,
