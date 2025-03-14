@@ -58,6 +58,7 @@ $(document).ready(function(){
                     <p>>> <span class="text-yellow-300">projects</span> - My work</p>
                     <p>>> <span class="text-yellow-300">contact</span> - Get in touch</p>
                     <p>>> <span class="text-yellow-300">hack</span> - Try it...</p>
+                    <p>>> <span class="text-yellow-300">game</span> - Play a secret game</p>
                     <p>>> <span class="text-yellow-300">clear</span> - Reset Terminal</p>
                 `);
                 break;
@@ -141,10 +142,15 @@ $(document).ready(function(){
                     $input.focus();
                 }, 2000);
                 break;
+            case 'game':
+                startGame();
+                break;
             default:
                 $output.append(`<p>>> Command not found. Type 'help' for options.</p>`);
         }
-        $output.scrollTop($output[0].scrollHeight);
+        if(cmd !== 'game'){
+            $output.scrollTop($output[0].scrollHeight);
+        }
     }
 
     function draw() {
@@ -160,4 +166,107 @@ $(document).ready(function(){
         }
     }
     setInterval(draw, 33);
-})
+
+    function startGame() {
+        $output.html('<canvas id="gameCanvas" class="w-full h-full"></canvas>');
+        $input.prop('disabled', true);
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = $output.width();
+        canvas.height = $output.height();
+
+        const dragonImg = new Image();
+        dragonImg.src = 'images/t-rexi.png';
+        const cactusImg = new Image();
+        cactusImg.src = 'images/cactus.png';
+
+        let dragon = { x: 50, y: canvas.height - 40, width: 32, height: 32, dy: 0, gravity: 0.7, jump: -20 };
+        let obstacles = [];
+        let score = 0;
+        let gameOver = false;
+        let frame = 0;
+
+        let imagesLoaded = 0;
+        function checkImagesLoaded() {
+            imagesLoaded++;
+            if (imagesLoaded === 2) draw();
+        }
+        dragonImg.onload = checkImagesLoaded;
+        cactusImg.onload = checkImagesLoaded;
+
+        function spawnObstacle() {
+            if (frame % 100 === 0 && !gameOver) {
+                obstacles.push({ x: canvas.width, y: canvas.height - 40, width: 20, height: 40, speed: 2 });
+            }
+        }
+
+        function draw() {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.drawImage(dragonImg, dragon.x, dragon.y, dragon.width, dragon.height);
+
+            dragon.dy += dragon.gravity;
+            dragon.y += dragon.dy;
+            if (dragon.y + dragon.height > canvas.height) {
+                dragon.y = canvas.height - dragon.height;
+                dragon.dy = 0;
+            }
+
+            obstacles.forEach((obs, i) => {
+                ctx.drawImage(cactusImg, obs.x, obs.y, obs.width, obs.height);
+                obs.x -= obs.speed;
+                if (obs.x + obs.width < 0) obstacles.splice(i, 1);
+                if (dragon.x < obs.x + obs.width && dragon.x + dragon.width > obs.x &&
+                    dragon.y < obs.y + obs.height && dragon.y + dragon.height > obs.y) {
+                    gameOver = true;
+                }
+            });
+
+            ctx.fillStyle = '#fff';
+            ctx.font = '16px monospace';
+            ctx.fillText(`Score: ${score}`, 10, 20);
+
+            if (!gameOver) {
+                spawnObstacle();
+                score++;
+                frame++;
+                requestAnimationFrame(draw);
+            } else {
+                ctx.fillStyle = '#f00';
+                ctx.font = '24px monospace';
+                ctx.fillText('Game Over', canvas.width / 2 - 50, canvas.height / 2);
+                $output.append('<p class="text-yellow-500">>> Type `exit` to return</p>');
+                $input.prop('disabled', false);
+                $input.focus();
+            }
+        }
+
+        $(document).on('keydown.game', function(e) {
+            if (e.key === ' ' && !gameOver && dragon.y === canvas.height - dragon.height) {
+                dragon.dy = dragon.jump;
+            }
+        });
+
+        $input.off('keypress').on('keypress.game', function(e) {
+            if (e.key === 'Enter' && gameOver) {
+                const cmd = $input.val().trim().toLowerCase();
+                if (cmd === 'exit') {
+                    $output.html('');
+                    $input.off('keypress.game').on('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            beep.play();
+                            const command = $input.val().trim().toLowerCase();
+                            processCommand(command);
+                            $input.val('');
+                        }
+                    });
+                    $(document).off('keydown.game');
+                    $output.append('<p class="text-yellow-500">>> Game terminated. System restored.</p>');
+                    $input.val('');
+                    $input.focus();
+                }
+            }
+        });
+    }
+});
