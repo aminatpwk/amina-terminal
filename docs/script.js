@@ -113,6 +113,7 @@ $(document).ready(function(){
                         $output.append(`<p>>> 1. MeeA Community Platform - [A social platform for young developers] (Tech: HTML, CSS, JS, PHP, MySQL) <a href="https://github.com/aminatpwk/codding-community-platform" class="text-blue-400 underline" target="_blank">GitHub</a></p>
                                 <p>>> 2. Calorie Tracker App - [A desktop app that keep track of daily consumed calories] (Tech: Java, JavaFX, MySQL) <a href="https://github.com/aminatpwk/calories-app" class="text-blue-400 underline" target="_blank">GitHub</a></p>
                                 <p>>> 3. MoonOdyssey - [An informative website about Moon] (Tech: HTML, CSS, JS, PHP, MySQL, Tailwind, NodeJS) <a href="https://github.com/aminatpwk/Moon-Odyssey-Web" class="text-blue-400 underline" target="_blank">GitHub</a></p>
+                                <p>>> 4. Memory Card Game - [Game] (Tech: ReactJS) <a href="https://dbz-memory-card.netlify.app/" class="text-blue-400 underline" target="_blank">Live Preview</a></p>
                         `);
                     }
                 });
